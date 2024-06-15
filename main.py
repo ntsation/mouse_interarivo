@@ -83,10 +83,11 @@ def virtual_mouse():
             # Se a mão está fechada, tira uma screenshot
             if(fingerUp == CLOSED_HAND):
                 now = datetime.now()
-                current_path = PATH + f'image{now.time()}.png'
+                current_time = now.strftime("%H-%M-%S-%f")[:-3]  # Format: HH-MM-SS-fff
+                current_path = PATH + f'image_{current_time}.png'
                 controlMovement.take_screenshot(current_path)
-                print('Screenshot okay')
-            
+                print('Screenshot saved successfully')
+                        
             # Se dois dedos estão levantados, move o mouse para a posição do dedo indicador
             if(fingerUp == TWO_FINGERS or fingerUp == TWO_FINGERSs):
                 x, y = imgList[INDEX_FINGER][1], imgList[INDEX_FINGER][2]
