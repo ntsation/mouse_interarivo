@@ -3,12 +3,14 @@ import mediapipe as mp
 
 class HandDetector():
     def __init__(self, mode=False, maxHands=1, modelComplexity=1, detectionCon=0.5, trackCon=0.5):
+        # Inicializa a classe HandDetector com os parâmetros fornecidos
         self.mode = mode
         self.maxHands = maxHands
         self.modelComplex = modelComplexity
         self.detectionCon = detectionCon
         self.trackCon = trackCon
         
+        # Inicializa o objeto Hands do mediapipe e o objeto de desenho
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, 
                                         self.detectionCon, self.trackCon)
@@ -16,10 +18,11 @@ class HandDetector():
         self.tipIds = [4, 8, 12, 16, 20]
 
     def findHands(self, img, draw=True):
+        # Encontra as mãos na imagem fornecida
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        #COLOR_BGR2RGB returns image in RGB format, which was initially in BGR format as read by cv2.imread()
         self.results = self.hands.process(imgRGB)
 
+        # Desenha as landmarks das mãos na imagem se draw for True
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
                 if draw:
@@ -27,6 +30,7 @@ class HandDetector():
         return img
 
     def findPositionFingers(self, img, draw=True):
+        # Encontra a posição dos dedos na imagem fornecida
         xPositionList = []
         yPositionList = []
         bbox = []
@@ -34,6 +38,7 @@ class HandDetector():
         if self.results.multi_hand_landmarks:
             myHand = self.results.multi_hand_landmarks[0] 
         
+            # Calcula a posição dos dedos na tela
             for id, fingerPosition in enumerate(myHand.landmark):
                 hightImage, widthImage, _ = img.shape
                 
@@ -54,13 +59,14 @@ class HandDetector():
         return self.lmList, bbox
 
     def fingersUp(self):
+        # Verifica quais dedos estão levantados
         fingers = []
-        # Thumb
+        # Polegar
         if self.lmList[self.tipIds[0]][1] > self.lmList[self.tipIds[0] - 1][1]:
             fingers.append(1)
         else:
             fingers.append(0)
-        # 4 Fingers
+        # 4 Dedos
         for id in range(1, 5):
             if self.lmList[self.tipIds[id]][2] < self.lmList[self.tipIds[id] - 2][2]:
                 fingers.append(1)
