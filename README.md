@@ -5,7 +5,8 @@ Este projeto Python permite o controle baseado em gestos de um mouse virtual usa
 ## Requisitos
 
 Para executar este projeto, certifique-se de ter as seguintes dependências instaladas, utilize o requeriments.txt
-```
+
+```cmd
 pip install -r requeriments.txt
 ```
 
@@ -31,15 +32,16 @@ pip install -r requeriments.txt
 
 Rode **main.py**:
 
-```
+```cmd
 python main.py
 ```
 
-### Siga as instruções na tela:
+### Siga as instruções na tela
 
 Posicione sua mão dentro da moldura da webcam.
 Execute gestos definidos em main.py (por exemplo, três dedos para cima para rolar, mão fechada para fazer uma captura de tela).
-### Saia do aplicativo:
+
+### Saia do aplicativo
 
 **Pressione q no teclado para sair do programa.**
 
